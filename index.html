@@ -8,17 +8,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
   <div class="container">
     <!-- Control Buttons -->
     <div class="controls">
       <button id="addBtn"><i class="ri-add-line"></i></button>
-      <button class="upbtn"><i class="ri-arrow-up-line"></i></button>
-      <button  class="downbtn"><i class="ri-arrow-down-line"></i></button>
+      <button id="upbtn"><i class="ri-arrow-up-line"></i></button>
+      <button id="downbtn"><i class="ri-arrow-down-line"></i></button>
     </div>
 
     <!-- Card Section -->
-    <div class="card-section">
-      <div class="card-stack">
+     <div class="card-section"> 
+      <!-- <div class="card-stack">
         <div class="card">
           <img src="https://i.pravatar.cc/80?img=1" alt="profile" class="avatar">
           <h2>Fatima Uma</h2>
@@ -51,7 +52,7 @@
             <button class="msg">Message</button>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="divider"></div>
 
@@ -61,38 +62,52 @@
         <div class="color" style="background-color: #5C3317;"></div>
         <div class="color" style="background-color: #009688;"></div>
       </div>
-    </div>
+    </div> 
   </div>
 
   <!-- Popup Form -->
-
   <div class="form-container">
-    <form  class="fromdetails">
+    <div id="formTitle">New Call</div>
 
-    <h2>New Call</h2>
+    <form class="fromdetails">
 
-    <label>Image URL</label>
-    <input required type="text" placeholder="Enter image URL">
+      <label>Image URL</label>
+      <input required type="text" placeholder="Enter image URL">
 
-    <label>Full Name</label>
-    <input  require type="text" placeholder="Enter full name">
+      <label>Full Name</label>
+      <input required type="text" placeholder="Enter full name">
 
-    <label>Home Town</label>
-    <input  require type="text" placeholder="Enter home town">
+      <label>Home Town</label>
+      <input required type="text" placeholder="Enter home town">
 
-    <label>Purpose</label>
-    <input  require type="text" placeholder="e.g., Quick appointment note">
+      <label>Purpose</label>
+      <input required type="text" placeholder="e.g., Quick appointment note">
 
-    <label>Category</label>
-    <div class="radio-group">
-      <label class="tag-checked"><input  require type="radio" name="category" value="Emergency"> Emergency</label>
-      <label class="tag-checked"><input  require type="radio" name="category" value="Important"> Important</label>
-      <label class="tag-checked"><input  require type="radio" name="category" value="Urgen"> Urgent</label>
-      <label class="tag-checked"><input  require type="radio" name="category" value="No Rush"> No Rush</label>
-    </div>
+      <label>Category</label>
 
-    <button class="create-btn">Create Note</button>
-    <button class="close-btn" id="closeBtn">Close</button>
+      <label class="tag-checked">
+        <input required type="radio" name="category" value="Emergency">
+        <span>Emergency</span>
+      </label>
+
+      <label class="tag-checked">
+        <input required type="radio" name="category" value="Important">
+        <span>Important</span>
+      </label>
+
+      <label class="tag-checked">
+        <input required type="radio" name="category" value="Urgent">
+        <span>Urgent</span>
+      </label>
+
+      <label class="tag-checked">
+        <input required type="radio" name="category" value="No Rush">
+        <span>No Rush</span>
+      </label>
+
+      <button class="create-btn">Create Note</button>
+      <button class="close-btn" id="closeBtn">Close</button>
+
     </form>
   </div>
 
