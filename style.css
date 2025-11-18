@@ -1,6 +1,7 @@
 /* ------------------------------
    GLOBAL BODY
 ------------------------------ */
+* { box-sizing: border-box; }
 body {
   margin: 0;
   height: 100vh;
@@ -16,153 +17,140 @@ body {
    MAIN CONTAINER
 ------------------------------ */
 .container {
+  width: 100%;
+  max-width: 920px;
+  height: 100vh;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
-  position: relative;
+  padding: 10px;
+  gap: 12px;
+  box-sizing: border-box;
+  background: #f5f5f5;
 }
 
-/* ------------------------------
-   CONTROLS
------------------------------- */
+/* LEFT CONTROL BUTTONS */
 .controls {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .controls button {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   border: none;
-  background: #333;
+  background: #000;
   color: white;
   font-size: 18px;
+  border-radius: 7px;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-.controls button:hover {
-  background: #444;
 }
 
 /* ------------------------------
-   CARD + COLORS SECTION
------------------------------- */
-.card-section {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  position: relative;
-}
-
-/* ------------------------------
-   CARD STACK
+   CARD STACK – MINI
 ------------------------------ */
 .card-stack {
   position: relative;
-  width: 280px;
-  height: 180px;
+  width: 210px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* CARD (base style) */
 .card {
-  position: absolute;
   width: 100%;
   height: 100%;
-  background: #2c2c2c;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  box-sizing: border-box;
+  position: absolute;
+  transition: transform .35s cubic-bezier(.2,.9,.2,1), opacity .35s;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: 0.4s;
+  align-items: flex-start;
 }
 
-/* Card stack layers */
-.card:nth-child(1) { transform: translateY(0); z-index: 3; }
-.card:nth-child(2) { transform: translateY(15px); z-index: 2; opacity: 0.9; }
-.card:nth-child(3) { transform: translateY(30px); z-index: 1; opacity: 0.8; }
+/* Layering handled by JS (z-index, transform, opacity) */
 
-/* Avatar */
+/* Avatar – mini */
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
 }
 
-/* Card Text */
-h2 {
-  font-size: 16px;
-  margin: 10px 0 5px;
+/* Text – mini */
+.card h2 {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  color: #222;
+  align-self: center;
 }
-
-p {
+.card p {
+  font-size: 11px;
+  margin: 3px 0;
+  color: #444;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 2px 0;
-  font-size: 13px;
-  color: #ccc;
+  gap: 8px;
 }
 
-/* Buttons in card */
+/* Buttons – mini */
 .buttons {
+  margin-top: auto;
   display: flex;
-  gap: 10px;
+  gap: 6px;
+  width: 100%;
 }
-
-.call {
-  background: #000;
-  color: #fff;
+.buttons button {
+  flex: 1;
+  padding: 6px;
+  font-size: 11px;
   border: none;
-  padding: 5px 12px;
-  border-radius: 20px;
+  border-radius: 6px;
   cursor: pointer;
 }
+.call { background: #009688; color: white; }
+.msg  { background: #1976d2; color: white; }
 
-.msg {
-  background: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* Divider Line */
-.divider {
-  width: 2px;
-  height: 120px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 2px;
-}
-
-/* Color circles */
+/* Right colors */
 .colors {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
-
 .color {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 2px solid #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.05);
 }
 
 /* ------------------------------
    POPUP FORM
 ------------------------------ */
 .form-container {
-  width: 280px;
-  padding: 10px;
+  width: 300px;
+  padding: 12px;
   background: #333;
   border-radius: 10px;
-  margin: 20px auto;
   color: white;
-  display: none;
+  display: none; /* shown/hidden by JS */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  z-index: 9999;
 }
-
 #formTitle {
   text-align: center;
   font-size: 16px;
@@ -170,159 +158,30 @@ p {
   font-weight: 600;
   color: white;
 }
-
-/* Form labels */
-label {
-  font-size: 12px;
-  margin-top: 4px;
-  display: block;
-}
-
-/* Input fields */
+label { font-size: 12px; margin-top: 6px; display: block; color: #ddd; }
 input[type="text"] {
-  width: 80%;
-  padding: 6px;
-  font-size: 12px;
-  border: none;
-  border-radius: 4px;
-  margin-top: 0px;
-}
-
-/* Radio category */
-.tag-checked {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 0px;
-}
-
-.tag-checked span {
-  font-size: 12px;
-}
-
-input[type="radio"] {
-  width: 14px;
-  height: 14px;
-}
-
-/* Buttons inside form */
-.create-btn,
-.close-btn {
   width: 100%;
   padding: 7px;
   font-size: 13px;
-  margin-top: 5px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+.tag-checked { display: flex; align-items: center; gap: 8px; margin-top: 6px; color: #ddd; }
+.create-btn, .close-btn {
+  width: 100%;
+  padding: 8px;
+  font-size: 13px;
+  margin-top: 8px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
+.create-btn { background: #4CAF50; color: white; }
+.close-btn  { background: #a33; color: white; }
 
-.create-btn {
-  background: #4CAF50;
-  color: white;
-}
-
-.close-btn {
-  background: #a33;
-  color: white;
-}
-
-/* Container for all cards */
-.card-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-}
-
-/* Individual card */
-.card {
-  background-color: #fff;
-  width: 220px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-/* Avatar image */
-.card .avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-  border: 2px solid #ddd;
-}
-
-/* Name */
-.card h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-/* Info rows */
-.card p {
-  font-size: 0.9rem;
-  color: #555;
-  margin: 5px 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* Highlight label span */
-.card p span:first-child {
-  font-weight: bold;
-}
-
-/* Buttons container */
-.card .buttons {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-/* Call button */
-.card .call {
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  transition: background-color 0.3s;
-}
-
-.card .call:hover {
-  background-color: #45a049;
-}
-
-/* Message button */
-.card .msg {
-  background-color: #2196f3;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background-color 0.3s;
-}
-
-.card .msg:hover {
-  background-color: #1976d2;
-}
+/* responsive small screens */
+/* @media (max-width: 520px) {
+  .container { gap: 8px; padding: 8px; }
+  .card-stack { width: 180px; height: 230px; }
+} */

@@ -1,188 +1,189 @@
-// Main container
+// -------------------------
+// SELECT ELEMENTS
+// -------------------------
 const formContainer = document.querySelector(".form-container");
-
-// Form
 const formDetails = document.querySelector(".fromdetails");
-
-// Title
 const formTitle = document.getElementById("formTitle");
 
-// Input fields
 const imageUrlInput = document.querySelector('input[placeholder="Enter image URL"]');
 const fullNameInput = document.querySelector('input[placeholder="Enter full name"]');
 const homeTownInput = document.querySelector('input[placeholder="Enter home town"]');
 const purposeInput = document.querySelector('input[placeholder="e.g., Quick appointment note"]');
 
-// Radio buttons
 const categoryRadios = document.querySelectorAll('input[name="category"]');
 
-// Buttons inside form
 const createBtn = document.querySelector(".create-btn");
 const closeBtn = document.getElementById("closeBtn");
 
-// External buttons
 const addBtn = document.querySelector("#addBtn");
 const upbtn = document.querySelector("#upbtn");
 const downbtn = document.querySelector("#downbtn");
 
 const maincontainer = document.querySelector(".container");
+const cardStack = document.querySelector(".card-stack"); // FIXED
 
-// Show the form
-addBtn.addEventListener("click", function () {
+
+// -------------------------
+// OPEN FORM
+// -------------------------
+addBtn.addEventListener("click", () => {
   formContainer.style.display = "block";
   maincontainer.style.display = "none";
 });
 
-// Hide form when clicking Close
-closeBtn.addEventListener("click", function () {  
+
+// -------------------------
+// CLOSE FORM
+// -------------------------
+closeBtn.addEventListener("click", () => {
   formContainer.style.display = "none";
   maincontainer.style.display = "flex";
 });
 
-// Form submit
+
+// -------------------------
+// SAVE TO STORAGE
+// -------------------------
+function saveStorage(obj) {
+  let oldstores = JSON.parse(localStorage.getItem("new")) || [];
+  oldstores.push(obj);
+  localStorage.setItem("new", JSON.stringify(oldstores));
+}
+
+
+// -------------------------
+// SUBMIT FORM
+// -------------------------
 formDetails.addEventListener("submit", function (evt) {
   evt.preventDefault();
 
-  // Get trimmed input values
   const image = imageUrlInput.value.trim();
   const name = fullNameInput.value.trim();
   const home = homeTownInput.value.trim();
-  const purpose = purposeInput.value.trim(); 
+  const purpose = purposeInput.value.trim();
 
-  // Validation
-  if(image === ""){
-    alert("Please enter a valid Image URL");
+  if (!image || !name || !home || !purpose) {
+    alert("Please fill all fields correctly!");
     return;
   }
 
-  if(name === ""){
-    alert("Please enter a valid Full Name");
-    return;
-  }
-
-  if(home === ""){
-    alert("Please enter a valid Home Town");
-    return;
-  }
-
-  if(purpose === ""){
-    alert("Please enter a valid Purpose");
-    return;
-  }
-
-  // Get selected category
   let selected = false;
-  categoryRadios.forEach(function(cat){
-    if(cat.checked){
-      selected = cat.value; // store selected value
-    }
+  categoryRadios.forEach(cat => {
+    if (cat.checked) selected = cat.value;
   });
 
-  if(!selected){
+  if (!selected) {
     alert("Please select a category");
     return;
   }
 
-    // Optionally hide form and show main container
+  saveStorage({ image, name, home, purpose, selected });
+
   formContainer.style.display = "none";
   maincontainer.style.display = "flex";
-
-  // alert("Note created successfully!");
-
-
-  
-
-  // Save to localStorage function
-function saveStorage(obj) {
-  // Check if "new" exists in localStorage
-  if (localStorage.getItem("new") === null) {
-    let oldstores = [];
-    oldstores.push(obj);
-    localStorage.setItem("new", JSON.stringify(oldstores));
-  } else {
-    let oldstores = JSON.parse(localStorage.getItem("new"));
-    oldstores.push(obj);
-    localStorage.setItem("new", JSON.stringify(oldstores));
-  }
-}
-
-
-
-  // Save data to localStorage
-  saveStorage({
-    image,
-    name,
-    home,
-    purpose,
-    selected
-  });
-
-  // Reset form
   formDetails.reset();
 
-
+  createCard();
 });
 
-// Select the container where cards will be added
-const cardSection = document.querySelector('.card-section');
 
-// Function to create a card
-function createCard(data) {
+// -------------------------
+// CREATE CARD
+// -------------------------
+function createCard() {
+  cardStack.innerHTML = ""; 
 
+  let allTasks = JSON.parse(localStorage.getItem("new")) || [];
 
-  // Create main card div
-  const card = document.createElement('div');
-  card.className = 'card';
+  allTasks.forEach(task => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-  // Avatar image
-  const img = document.createElement('img');
-  img.src = data.img;
-  img.alt = 'profile';
-  img.className = 'avatar';
-  card.appendChild(img);
+    const img = document.createElement("img");
+    img.src = task.image;
+    img.classList.add("avatar");
+    card.appendChild(img);
 
-  // Name
-  const name = document.createElement('h2');
-  name.textContent = data.name;
-  card.appendChild(name);
+    const name = document.createElement("h2");
+    name.textContent = task.name;
+    card.appendChild(name);
 
-  // Home town
-  const hometown = document.createElement('p');
-  hometown.innerHTML = `<span>Home town</span> <span>${data.home}</span>`;
-  card.appendChild(hometown);
+    const hometown = document.createElement("p");
+    hometown.textContent = `Home: ${task.home}`;
+    card.appendChild(hometown);
 
-  // Bookings
-  const bookings = document.createElement('p');
-  bookings.innerHTML = `<span>Bookings</span> <span>${data.bookings}</span>`;
-  card.appendChild(bookings);
+    const pur = document.createElement("p");
+    pur.textContent = `Purpose: ${task.purpose}`;
+    card.appendChild(pur);
 
-  // Buttons container
-  const buttons = document.createElement('div');
-  buttons.className = 'buttons';
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons");
 
-  // Call button
-  const callBtn = document.createElement('button');
-  callBtn.className = 'call';
-  callBtn.innerHTML = '<i class="ri-phone-line"></i> Call';
-  buttons.appendChild(callBtn);
+    const callBtn = document.createElement("button");
+    callBtn.classList.add("call");
+    callBtn.innerHTML = '<i class="ri-phone-line"></i> Call';
 
-  // Message button
-  const msgBtn = document.createElement('button');
-  msgBtn.className = 'msg';
-  msgBtn.textContent = 'Message';
-  buttons.appendChild(msgBtn);
+    const msgBtn = document.createElement("button");
+    msgBtn.classList.add("msg");
+    msgBtn.textContent = "Message";
 
-  // Append buttons to card
-  card.appendChild(buttons);
+    buttons.appendChild(callBtn);
+    buttons.appendChild(msgBtn);
 
-  // Append card to container
-  cardSection.appendChild(card);
+    card.appendChild(buttons);
+
+    cardStack.appendChild(card);
+  });
+
+  updatecard(); // FIXED → Update after creating
 }
 
-// Example usage
-createCard({
-  img: 'https://i.pravatar.cc/80?img=1',
-  name: 'Fatima Uma',
-  home: 'Singapore',
-  bookings: '3 times'
+
+// -------------------------
+// LOAD CARDS ON PAGE LOAD
+// -------------------------
+createCard();
+
+
+// -------------------------
+// UPDATE CARD STACK
+// -------------------------
+function updatecard() {
+
+  let cards = document.querySelectorAll(".card-stack .card"); // FIXED
+
+  cards.forEach(function(card, index) {
+
+    card.style.zIndex = 100 - index;
+
+    card.style.transform = `translateY(${index * 10}px) scale(${1 - index * 0.03})`; // FIXED
+
+    card.style.opacity = `${1 - index * 0.05}`; // FIXED
+  });
+}
+
+
+// -------------------------
+// MOVE LAST CARD TO TOP
+// -------------------------
+upbtn.addEventListener("click", function () {
+  let lastchild = cardStack.lastElementChild;
+
+  if (lastchild) {
+    cardStack.insertBefore(lastchild, cardStack.firstElementChild);
+    updatecard();
+  }
+});
+
+
+// -------------------------
+// MOVE FIRST CARD TO BOTTOM
+// -------------------------
+downbtn.addEventListener("click", function () {
+  let firstchild = cardStack.firstElementChild;
+
+  if (firstchild) {
+    cardStack.appendChild(firstchild);
+    updatecard();
+  }
 });

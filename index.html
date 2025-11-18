@@ -1,76 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>User Card Stack</title>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  
+
   <div class="container">
-    <!-- Control Buttons -->
+    <!-- Control Buttons (left) -->
     <div class="controls">
-      <button id="addBtn"><i class="ri-add-line"></i></button>
-      <button id="upbtn"><i class="ri-arrow-up-line"></i></button>
-      <button id="downbtn"><i class="ri-arrow-down-line"></i></button>
+      <button id="addBtn" title="Add"><i class="ri-add-line"></i></button>
+      <button id="upbtn" title="Move top to bottom"><i class="ri-arrow-up-line"></i></button>
+      <button id="downbtn" title="Move bottom to top"><i class="ri-arrow-down-line"></i></button>
     </div>
 
-    <!-- Card Section -->
-     <div class="card-section"> 
-      <!-- <div class="card-stack">
-        <div class="card">
-          <img src="https://i.pravatar.cc/80?img=1" alt="profile" class="avatar">
-          <h2>Fatima Uma</h2>
-          <p><span>Home town</span> <span>Singapore</span></p>
-          <p><span>Bookings</span> <span>3 times</span></p>
-          <div class="buttons">
-            <button class="call"><i class="ri-phone-line"></i> Call</button>
-            <button class="msg">Message</button>
-          </div>
-        </div>
+    <!-- Card stack (center) -->
+    <div class="card-stack"></div>
 
-        <div class="card">
-          <img src="https://i.pravatar.cc/80?img=2" alt="profile" class="avatar">
-          <h2>John Deo</h2>
-          <p><span>Home town</span> <span>London</span></p>
-          <p><span>Bookings</span> <span>5 times</span></p>
-          <div class="buttons">
-            <button class="call"><i class="ri-phone-line"></i> Call</button>
-            <button class="msg">Message</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <img src="https://i.pravatar.cc/80?img=3" alt="profile" class="avatar">
-          <h2>Priya Sen</h2>
-          <p><span>Home town</span> <span>Delhi</span></p>
-          <p><span>Bookings</span> <span>4 times</span></p>
-          <div class="buttons">
-            <button class="call"><i class="ri-phone-line"></i> Call</button>
-            <button class="msg">Message</button>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="divider"></div>
-
-      <div class="colors">
-        <div class="color" style="background-color: #000;"></div>
-        <div class="color" style="background-color: #4B0082;"></div>
-        <div class="color" style="background-color: #5C3317;"></div>
-        <div class="color" style="background-color: #009688;"></div>
-      </div>
-    </div> 
+    <!-- Colors (right) -->
+    <div class="colors">
+      <div class="color" data-color="#000" style="background-color: #000;"></div>
+      <div class="color" data-color="#4B0082" style="background-color: #4B0082;"></div>
+      <div class="color" data-color="#5C3317" style="background-color: #5C3317;"></div>
+      <div class="color" data-color="#009688" style="background-color: #009688;"></div>
+    </div>
   </div>
 
   <!-- Popup Form -->
-  <div class="form-container">
+  <div class="form-container" aria-hidden="true">
     <div id="formTitle">New Call</div>
 
     <form class="fromdetails">
-
       <label>Image URL</label>
       <input required type="text" placeholder="Enter image URL">
 
@@ -105,11 +68,10 @@
         <span>No Rush</span>
       </label>
 
-      <button class="create-btn">Create Note</button>
-      <button class="close-btn" id="closeBtn">Close</button>
-
+      <button class="create-btn" type="submit">Create Note</button>
+      <button class="close-btn" id="closeBtn" type="button">Close</button>
     </form>
-  </div>
+  </div>  
 
   <script src="script.js"></script>
 </body>
